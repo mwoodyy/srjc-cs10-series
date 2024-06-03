@@ -1,0 +1,69 @@
+/*
+Matthew Woody
+Dave Harden
+2/5/24
+Program for given integer inputs howMany and maxNum, then generate a vector of howMany unique random integers from 0 (inclusive) to maxNum (exclusive).
+  */
+#include <iostream>
+#include <vector>
+#include <set>
+using namespace std;
+
+
+
+void PrintNums(vector<int> nums, int size);
+vector<int> UniqueRandomInts(unsigned int howMany, int maxNum, int& retries);
+
+
+int main() {
+   int howMany;
+   int maxNum;
+   int retries;
+
+   cin >> howMany;
+   cin >> maxNum;
+   vector<int> uniqueInts;
+
+   srand(641);                      // Seed random number generator for testing
+
+   uniqueInts = UniqueRandomInts(howMany, maxNum, retries);
+   PrintNums(uniqueInts, howMany);
+   cout << "  [" << retries << " retries]" << endl;
+}
+
+
+
+
+
+// Print the integers in vector nums separated by a space
+void PrintNums(vector<int> nums, int size) {
+   for (int i = 0; i < size; ++i) {
+      cout << nums.at(i) << " ";
+   }
+}
+
+
+
+// Generate howMany unique random integers 0 <= N < maxNum and return in nums
+vector<int> UniqueRandomInts(unsigned int howMany, int maxNum, int& retries) {
+   int nextRand;
+   retries = 0;
+   set<int> alreadySeen;
+   vector<int> nums;
+
+  while (nums.size() < howMany){
+    nextRand = rand() % maxNum;
+
+    if (alreadySeen.find(nextRand) == alreadySeen.end()){
+       // If the number is not already seen, add it to nums and mark it as seen
+       nums.push_back(nextRand);
+       alreadySeen.insert(nextRand);
+    }
+    else{
+       // If the number is already seen, increment retries and generate another random integer
+       retries++;
+    }
+  }
+
+  return nums;
+}
