@@ -1,0 +1,47 @@
+/*
+Matthew Woody
+Dave Harden
+CS10C project 27.4
+2/5/24
+Program to check if an input is a palindrome using a deque
+  */
+#include <iostream>
+#include <deque>
+#include <string>
+
+using namespace std;
+
+int main() {
+  string input;
+  bool result = true; //default is true unless proven otherwise
+  char quote = '"';
+
+  deque<char> line;
+
+  getline(cin, input);
+
+  int strlen = input.length();
+  for (int i = 0; i < strlen; i++){
+    if(isalpha(input[i])){ //if the character at the current iteration of the loop is alphabetical then put it in into the deque (converted to lowecase)
+      line.push_back(tolower(input[i]));
+    }
+  }
+
+  while(line.size() > 1 && result){ //while the size of the deque is greater than one and is a palindrome, iterate through the deque
+    char front = line.front();
+    char back = line.back();
+    line.pop_front();
+    line.pop_back();
+
+    if(front != back){ // condition for if isn't a palindrome
+      result = false;
+    }
+  }
+
+  if (result){
+    cout << "Yes, " << quote << input << quote << " is a palindrome." << endl;
+  }
+  else{
+    cout << "No, " << quote << input << quote << " is not a palindrome." << endl;
+  }
+}
